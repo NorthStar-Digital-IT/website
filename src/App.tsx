@@ -39,6 +39,7 @@ import { RedesignAnimation } from "./components/RedesignAnimation";
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<any | null>(null);
   
   // Lead Strategy States
   const [leadName, setLeadName] = useState("");
@@ -94,48 +95,112 @@ export default function App() {
       icon: <Laptop className="text-[#00677f]" size={28} />,
       features: ["Responsive & Fast Layouts", "Built-in SEO Foundation", "Optimized Landing Pages"],
       isLarge: true,
+      longDescription: "Our custom website redesign process is engineered to modernize your online footprint. We replace outdated, slow, and hard-to-use legacy layouts with high-performance, search-engine-ready marketing hubs. Using modern CSS and React layouts, we achieve sub-second load times that keep visitors on your site longer, boosting engagement and local conversions.",
+      deliverables: [
+        "100/100 Mobile PageSpeed optimization",
+        "Conversion-rate optimized layout structures",
+        "Schema.org local business structured data integration",
+        "Responsive cross-device styling & accessibility audit"
+      ],
+      formValue: "Website Redesign"
     },
     {
       id: "local-seo",
       title: "Local SEO",
       description: "Dominate 'near me' organic searches on Google Maps across Denton County and Flower Mound.",
       icon: <Search className="text-[#00677f]" size={20} />,
+      longDescription: "Gain maximum visibility in Google Maps and local search packs. Our local SEO framework optimizes your Google Business Profile, builds local directory relevance, and develops localized content targeting Highland Village, Flower Mound, and surrounding Denton County searchers.",
+      deliverables: [
+        "Google Business Profile (GBP) audit and tuning",
+        "NAP (Name, Address, Phone) citation synchronization",
+        "Local competitor ranking map analytics",
+        "Localized keypage semantic content alignment"
+      ],
+      formValue: "Local SEO & Map Standing"
     },
     {
       id: "ai-assistants",
       title: "AI Chat Assistants",
       description: "Intelligent, 24/7 custom-tailored automated support directly on your website to qualify leads.",
       icon: <Bot className="text-[#00677f]" size={20} />,
+      longDescription: "Deploy custom AI agents trained specifically on your company's operational rules, services, pricing, and FAQ. These agents interact instantly with visitors around the clock to answer complex questions, collect lead info, and book consultations while you sleep.",
+      deliverables: [
+        "Custom training data ingestion & safety bounds configuration",
+        "Automatic lead information capture & CRM forwarding",
+        "Integrated scheduling call-to-actions",
+        "Telemetry and chat history audit logs"
+      ],
+      formValue: "AI Chat Assistance Integration"
     },
     {
       id: "booking",
       title: "Booking Systems",
       description: "Integrated online scheduling frameworks tailored precisely for professional service providers.",
       icon: <Calendar className="text-[#00677f]" size={20} />,
+      longDescription: "Streamline client bookings and appointment calendars without the back-and-forth email tags. We construct automated scheduling systems that sync with your operational calendar and send text/email reminders to clients.",
+      deliverables: [
+        "Automated email & SMS appointment confirmation sequences",
+        "Direct synchronization with Google, Apple, or Outlook calendars",
+        "Interactive intake forms embedded directly in the scheduling flow",
+        "Optional secure online deposit & payment processing integration"
+      ],
+      formValue: "Website Redesign"
     },
     {
       id: "speed-optimization",
       title: "Speed Optimization",
       description: "Radically decrease load times to exceed Google Core Web Vital expectations with pixel precision.",
       icon: <Zap className="text-[#00677f]" size={20} />,
+      longDescription: "Speed is the #1 factor in user bounce rates. We analyze and optimize every aspect of your site's asset delivery—compressing media, code-splitting bundles, leveraging serverless caching, and prioritizing rendering to ensure instantaneous response times.",
+      deliverables: [
+        "Image format conversions (WebP/AVIF) & visual asset compression",
+        "CSS/JS bundle size minification & duplicate code removal",
+        "Vercel Edge server and CDN caching headers configuration",
+        "Google Core Web Vitals (LCP, FID, CLS) validation and passing"
+      ],
+      formValue: "Core Page Speed Optimization"
     },
     {
       id: "mobile-first",
       title: "Mobile First",
       description: "Pristine, responsive design focused on tap-index targeting for optimal modern phone conversions.",
       icon: <Smartphone className="text-[#00677f]" size={20} />,
+      longDescription: "Most local searches are performed on a mobile device. We build responsive components from the mobile viewport up, guaranteeing tap-targets are spaced correctly for thumbs, menus are intuitive, and text is instantly legible on all screen sizes.",
+      deliverables: [
+        "Mobile-first responsive viewport layouts",
+        "Touch target sizing and interactive feedback states",
+        "Dynamic high-density display asset resolution scaling",
+        "Adaptive mobile navigation overlays and slides"
+      ],
+      formValue: "Website Redesign"
     },
     {
       id: "email-automation",
       title: "Email Automation",
       description: "Drip campaigns and automated sequences to nurture prospects while you manage your operational flow.",
       icon: <Mail className="text-[#00677f]" size={20} />,
+      longDescription: "Build automatic customer follow-up pipelines. We design, write, and deploy automated email sequences that welcome new leads, request business reviews, and nurture potential clients without manual overhead.",
+      deliverables: [
+        "Drip sequence strategy mapping and copy drafting",
+        "CRM & lead tag integration to track customer lifecycle stages",
+        "A/B subject line testing for optimized open rates",
+        "Automated review requests triggered by project completion"
+      ],
+      formValue: "AI Chat Assistance Integration"
     },
     {
       id: "analytics",
       title: "Analytics",
       description: "High-integrity telemetry dashboards mapping consumer funnel events and conversion bottlenecks.",
       icon: <BarChart3 className="text-[#00677f]" size={20} />,
+      longDescription: "Stop guessing what your users do. We deploy clean, secure, and privacy-compliant event tracking dashboards that map conversion paths, form abandonment, and scroll depth so you know exactly where leaks in your funnel are.",
+      deliverables: [
+        "Google Analytics 4 custom conversion funnel maps",
+        "Vercel Analytics real-time site telemetry reporting",
+        "Call-to-action button click events & scroll depth tracking",
+        "Comprehensive user path analysis reports"
+      ],
+      formValue: "Core Page Speed Optimization"
     },
   ];
 
@@ -160,8 +225,7 @@ export default function App() {
   return (
     <div className="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen relative overflow-x-hidden">
       
-      {/* Background Dots */}
-      <DotPattern width={24} height={24} className="opacity-50" />
+      {/* Moved DotPattern inside Hero section to optimize scrolling speed */}
 
       {/* FIXED HEADER */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 h-20 transition-all shadow-xs">
@@ -260,6 +324,8 @@ export default function App() {
         
         {/* HERO SECTION */}
         <section className="relative pt-12 md:pt-24 pb-20 md:pb-32 overflow-hidden px-6" id="hero">
+          {/* Background Dots (contained in Hero section to avoid full-page rasterization scroll lag) */}
+          <DotPattern width={24} height={24} className="opacity-50" />
           {/* Ambient glow blobs */}
           <div className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-slate-200/40 blur-[100px] pointer-events-none -z-10" />
           <div className="absolute bottom-12 right-12 w-96 h-96 rounded-full bg-slate-300/10 blur-[120px] pointer-events-none -z-10" />
@@ -366,7 +432,8 @@ export default function App() {
               {services.map((svc) => (
                 <div
                   key={svc.id}
-                  className={`relative p-6 md:p-8 bg-white border border-slate-200/80 rounded-2xl flex flex-[#111] flex-col justify-between hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 ${
+                  onClick={() => setSelectedService(svc)}
+                  className={`relative p-6 md:p-8 bg-white border border-slate-200/80 rounded-2xl flex flex-col justify-between hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 cursor-pointer ${
                     svc.isLarge ? "md:col-span-2 md:row-span-2" : "md:col-span-1"
                   }`}
                 >
@@ -386,7 +453,7 @@ export default function App() {
                       {svc.title}
                     </h3>
                     
-                    <p className={`text-slate-600 font-sans mt-3 font-normal leading-relaxed ${
+                    <p className={`text-slate-605 font-sans mt-3 font-normal leading-relaxed ${
                       svc.isLarge ? "text-xs md:text-sm" : "text-xs"
                     }`}>
                       {svc.description}
@@ -406,7 +473,7 @@ export default function App() {
                     )}
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-100 hidden group-hover:flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-1.5 text-xs font-bold text-[#00677f] group-hover:text-slate-900 transition-colors">
                     <span>Learn more</span> 
                     <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                   </div>
@@ -539,7 +606,9 @@ export default function App() {
                     </div>
                     <div>
                       <h4 className="font-bold text-xs text-slate-900">Business Inquiries</h4>
-                      <p className="text-xs text-slate-605 mt-1">hello@northstardigital.com</p>
+                      <p className="text-xs text-slate-605 mt-1">
+                        <a href="mailto:northstardigital@protonmail.com" className="hover:underline">northstardigital@protonmail.com</a>
+                      </p>
                     </div>
                   </div>
 
@@ -549,7 +618,9 @@ export default function App() {
                     </div>
                     <div>
                       <h4 className="font-bold text-xs text-slate-900">Direct Hotline</h4>
-                      <p className="text-xs text-slate-605 mt-1">(972) 555-0123</p>
+                      <p className="text-xs text-slate-605 mt-1">
+                        <a href="tel:469-249-2382" className="hover:underline">469-249-2382</a>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -739,7 +810,7 @@ export default function App() {
             </h5>
             <p className="text-xs text-slate-405 font-sans">
               Flower Mound, TX 75022 <br />
-              hello@northstardigital.com
+              <a href="mailto:northstardigital@protonmail.com" className="hover:underline">northstardigital@protonmail.com</a>
             </p>
           </div>
 
@@ -758,6 +829,86 @@ export default function App() {
         </div>
 
       </footer>
+
+      {/* SERVICE DETAILS MODAL */}
+      <AnimatePresence>
+        {selectedService && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-900/65 backdrop-blur-xs"
+            onClick={() => setSelectedService(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="bg-white rounded-3xl p-6 md:p-8 max-w-xl w-full shadow-2xl relative border border-slate-100 text-left"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedService(null)}
+                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-650 hover:bg-slate-50 rounded-full transition-all cursor-pointer"
+                aria-label="Close modal"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3.5 bg-slate-100 text-slate-800 rounded-2xl w-fit">
+                  {selectedService.icon}
+                </div>
+                <div>
+                  <span className="text-[10px] text-slate-400 font-mono uppercase tracking-widest font-bold">Service Details</span>
+                  <h4 className="font-display font-extrabold text-xl md:text-2xl text-slate-950 leading-tight">
+                    {selectedService.title}
+                  </h4>
+                </div>
+              </div>
+
+              <p className="text-slate-600 text-xs md:text-sm leading-relaxed mb-6">
+                {selectedService.longDescription}
+              </p>
+
+              <h5 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">
+                Key Service Deliverables
+              </h5>
+              <ul className="space-y-2.5 mb-8">
+                {selectedService.deliverables.map((deliv: string, idx: number) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700">
+                    <span className="p-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 mt-0.5 shrink-0">
+                      <Check size={10} strokeWidth={3} />
+                    </span>
+                    <span>{deliv}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <ShinyButton
+                  onClick={() => {
+                    setLeadService(selectedService.formValue);
+                    setSelectedService(null);
+                    const el = document.getElementById("contact");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="w-full sm:flex-1 text-xs uppercase tracking-widest font-mono"
+                >
+                  Get Free Strategy Proposal
+                </ShinyButton>
+                <button
+                  onClick={() => setSelectedService(null)}
+                  className="w-full sm:w-auto border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg px-6 py-3 font-semibold text-xs uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  Close Details
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

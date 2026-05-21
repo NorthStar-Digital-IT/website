@@ -150,8 +150,8 @@ export function RedesignAnimation() {
               {/* Laser line effect */}
               <motion.div 
                 className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-slate-400 to-transparent shadow-[0_0_15px_rgba(148,163,184,0.4)]"
-                style={{ zIndex: 10 }}
-                animate={{ top: ["5%", "95%", "5%"] }}
+                style={{ zIndex: 10, top: 0 }}
+                animate={{ y: ["15px", "310px", "15px"] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               />
 

@@ -53,15 +53,15 @@ interface BorderBeamProps {
   colorTo?: string;
 }
 export function BorderBeam({
-  duration = 5,
+  duration = 8,
   size = 150,
   colorFrom = "#00677f",
   colorTo = "#00d2ff",
 }: BorderBeamProps) {
   return (
     <div className="absolute inset-0 pointer-events-none rounded-[inherit] overflow-hidden">
-      <motion.div
-        className="absolute"
+      <div
+        className="absolute animate-border-beam"
         style={{
           width: size,
           height: size,
@@ -70,16 +70,8 @@ export function BorderBeam({
           filter: "blur(8px)",
           top: "-50%",
           left: "-50%",
-        }}
-        animate={{
-          x: ["0%", "200%", "200%", "0%", "0%"],
-          y: ["0%", "0%", "200%", "200%", "0%"],
-        }}
-        transition={{
-          duration,
-          ease: "linear",
-          repeat: Infinity,
-        }}
+          "--beam-duration": `${duration}s`,
+        } as React.CSSProperties}
       />
     </div>
   );
@@ -112,11 +104,11 @@ export function ShinyButton({
       {/* Background slate shine gradient */}
       <div className="absolute inset-x-0 -top-px -bottom-px rounded-lg bg-gradient-to-r from-slate-900 via-slate-800 to-slate-950 opacity-95 group-hover:opacity-100 transition-opacity" />
       
-      {/* Moving glass sweep */}
+      {/* Moving glass sweep - Optimized using GPU-accelerated x (translateX) instead of left */}
       <motion.div
         className="absolute top-0 bottom-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
-        initial={{ left: "-100%" }}
-        animate={{ left: "150%" }}
+        initial={{ x: "-120%" }}
+        animate={{ x: "320%" }}
         transition={{
           repeat: Infinity,
           repeatType: "loop",
@@ -133,7 +125,7 @@ export function ShinyButton({
   );
 }
 
-// Marquee loops items horizontally indefinitely
+// Marquee loops items horizontally indefinitely - Optimized using GPU-accelerated CSS animations
 interface MarqueeProps {
   children: React.ReactNode;
   reverse?: boolean;
@@ -146,40 +138,20 @@ export function Marquee({
   pauseOnHover = true,
   className = "",
 }: MarqueeProps) {
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const [scrollWidth, setScrollWidth] = useState(0);
-
-  useEffect(() => {
-    if (marqueeRef.current) {
-      setScrollWidth(marqueeRef.current.scrollWidth);
-    }
-  }, [children]);
-
   return (
     <div className={`overflow-hidden flex w-full relative group ${className}`}>
       {/* Left/Right masks for smooth aesthetic fades */}
-      <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none" />
-      <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
-      <motion.div
-        ref={marqueeRef}
-        className="flex shrink-0 gap-6 py-4 whitespace-nowrap"
-        initial={{ x: reverse ? "-50%" : "0%" }}
-        animate={{ x: reverse ? "0%" : "-50%" }}
-        transition={{
-          repeat: Infinity,
-          repeatType: "loop",
-          duration: 35,
-          ease: "linear",
-        }}
-        style={{
-          // Render two sets to create a seamless infinite circular loop
-          animationPlayState: pauseOnHover ? "paused" : "running",
-        }}
+      <div
+        className={`flex shrink-0 gap-6 py-4 whitespace-nowrap ${
+          reverse ? "animate-marquee-reverse" : "animate-marquee"
+        }`}
       >
         {children}
         {children}
-      </motion.div>
+      </div>
     </div>
   );
 }
